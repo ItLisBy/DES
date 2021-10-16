@@ -3,6 +3,16 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Scanner;
 
 public class DES {
     private static int[] PC_1 = {
@@ -17,17 +27,13 @@ public class DES {
     };
 
     public static void main(String[] args) {
-        String key_path = "";
-        String message_path = "";
-        String key = new byte[8];
+        String key = "";
         String message = "";
         for (int i = 0; i < args.length; ++i) {
             if (args[i].isBlank()) {
                 continue;
             }
             switch (args[i]) {
-                case "-k_p" -> key_path = args[++i];
-                case "-m_p" -> message_path = args[++i];
                 //TODO: Key can be both decimal and hex
                 case "-k_h" -> {
                     //key = BigInteger.valueOf(Long.parseLong(args[++i], 16)).toByteArray();
@@ -41,32 +47,20 @@ public class DES {
             }
         }
         if (key.isBlank() || message.isBlank()) {
-            if (key_path.isBlank() || message_path.isBlank()) {
-                System.out.println("Error: Invalid parameter");
-                return;
-            }
-            try {
-                //key = (long) (new String(Files.readAllBytes(Paths.get(key_path))));
-                message = new String(Files.readAllBytes(Paths.get(message_path)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            System.out.println("Error: Invalid parameter");
+            return;
         }
-
-        Cipher(key, message);
-
     }
 
-    private static void Cipher(byte[] key, String message) {
+    /*private static void Cipher(String key, String message) {
 
-    }
+    }*/
 
-    private static String[][] Keys(String key) {
+    /*private static String[][] Keys(String key) {
         StringBuilder new_key = new StringBuilder();
         for (var i : PC_1) {
             new_key.append(key.charAt(i));
         }
         var o = Long.parseLong(new_key.toString(), 2) << 1;
-    }
+    }*/
 }
